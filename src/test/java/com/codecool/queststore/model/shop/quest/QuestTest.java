@@ -6,13 +6,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuestTest {
 
-    private Quest quest = new Quest(1,"d","u",3,"p","a",null,false,3,1);
 
     @Test
-        void testSomething(){
-            System.out.println("CHUJ");
-            boolean isDone = this.quest.IS_DONE();
-            assertFalse(isDone);
+    void testConstructorNullParameters(){
+        boolean exceptionThrown = false;
+        try{
+            Quest quest = new Quest(0,null, null,0,null,null,null,false,0,0);
+        }catch(Exception e){
+            exceptionThrown = true;
         }
+        assertTrue(exceptionThrown);
+    }
+
+
+    @Test
+    void testConstructorNegativeParameters(){
+        boolean exceptionThrown = false;
+        try{
+            Quest quest = new Quest(-5,"name", "desc",-5,"imgName","imgMkdName",null,false,-5,-5);
+        }catch(Exception e){
+            exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+    }
 
 }
