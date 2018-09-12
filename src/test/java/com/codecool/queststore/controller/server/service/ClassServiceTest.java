@@ -10,22 +10,21 @@ import org.mockito.MockitoAnnotations;
 import java.net.HttpCookie;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class ClassServiceTest {
 
-    @Mock
-    private HttpCookie httpCookie;
-
-    @Mock
-    private String path;
-
-    @InjectMocks
     private ClassService classService;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        HttpCookie mockHttpCookie = mock(HttpCookie.class);
+        String path = "";
+        this.classService = new ClassService(mockHttpCookie, path);
     }
 
-
+    @Test
+    public void testIfCastableToIntWithNullArgument() {
+        assertThrows(IllegalArgumentException.class, () -> classService.isStringCastableToInt(null));
+    }
 }
