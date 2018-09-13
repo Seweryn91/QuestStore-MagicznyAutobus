@@ -123,7 +123,7 @@ public class ClassService {
         }
     }
 
-    private String[] splitURL(String path) {
+    protected String[] splitURL(String path) {
         return path.split("/");
     }
 
@@ -138,7 +138,7 @@ public class ClassService {
         return null;
     }
 
-    private boolean isStringCastableToInt(String string) {
+    protected boolean isStringCastableToInt(String string) {
         try{
             Integer.parseInt(string);
             return true;
