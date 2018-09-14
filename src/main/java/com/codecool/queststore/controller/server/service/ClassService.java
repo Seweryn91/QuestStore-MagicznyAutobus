@@ -1,6 +1,7 @@
 package com.codecool.queststore.controller.server.service;
 
 import com.codecool.queststore.DAO.ClassDAO;
+import com.codecool.queststore.DAO.ConnectionPool;
 import com.codecool.queststore.DAO.UserDAO;
 import com.codecool.queststore.dao.interfaces.ClassDAOInterface;
 import com.codecool.queststore.dao.interfaces.UserDAOInterface;
@@ -31,7 +32,7 @@ public class ClassService {
     public String generateResponseBody() throws SQLException {
         System.out.println("path: " + path);
         String[] splitedPath = splitURL(path);
-        User currentUser = new UserDAO().getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
+        User currentUser = new UserDAO(ConnectionPool.getConnection()).getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
         CodecoolClass targetClass;
         List<CodecoolClass> classes = classDAOInterface.getClasses();
 
@@ -63,11 +64,11 @@ public class ClassService {
             return false;
     }
 
-    private String handleAction(String[] splitedPath, User currentUser, List<CodecoolClass> classes) {
+    private String handleAction(String[] splitedPath, User currentUser, List<CodecoolClass> classes) throws SQLException {
         final int TARGET_CLASS_ID_PLACE = 3;
         String message;
         List<User> users;
-        UserDAOInterface userDAOInterface = new UserDAO();
+        UserDAOInterface userDAOInterface = new UserDAO(ConnectionPool.getConnection());
 
         if (splitedPath.length == 4) {
             System.out.println("Choose user");

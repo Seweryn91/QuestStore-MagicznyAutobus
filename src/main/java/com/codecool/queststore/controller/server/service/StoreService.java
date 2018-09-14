@@ -2,6 +2,7 @@ package com.codecool.queststore.controller.server.service;
 
 import com.codecool.queststore.DAO.ArtifactDAO;
 import com.codecool.queststore.DAO.ClassDAO;
+import com.codecool.queststore.DAO.ConnectionPool;
 import com.codecool.queststore.DAO.UserDAO;
 import com.codecool.queststore.dao.interfaces.ArtifactDAOInterface;
 import com.codecool.queststore.model.server.session.SessionPool;
@@ -31,7 +32,7 @@ public class StoreService {
         String[] splitedPath = splitURL(path);
         User currentUser = null;
         try {
-            currentUser = new UserDAO().getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
+            currentUser = new UserDAO(ConnectionPool.getConnection()).getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
         } catch (SQLException e) {
             e.printStackTrace();
         }

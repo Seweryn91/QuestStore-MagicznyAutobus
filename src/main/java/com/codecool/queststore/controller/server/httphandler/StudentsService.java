@@ -1,6 +1,7 @@
 package com.codecool.queststore.controller.server.httphandler;
 
 import com.codecool.queststore.DAO.ClassDAO;
+import com.codecool.queststore.DAO.ConnectionPool;
 import com.codecool.queststore.DAO.StudentDAO;
 import com.codecool.queststore.DAO.UserDAO;
 import com.codecool.queststore.model.server.session.SessionPool;
@@ -19,7 +20,7 @@ public class StudentsService {
     }
 
     String generateResponseBody(boolean isCreated) throws SQLException {
-        User currentUser = new UserDAO().getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
+        User currentUser = new UserDAO(ConnectionPool.getConnection()).getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
 
         return new TemplateRender().RenderStudentListPage(currentUser, new StudentDAO().getStudents(), isCreated, new ClassDAO().getClasses());
     }

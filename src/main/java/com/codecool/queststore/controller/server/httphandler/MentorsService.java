@@ -1,5 +1,6 @@
 package com.codecool.queststore.controller.server.httphandler;
 
+import com.codecool.queststore.DAO.ConnectionPool;
 import com.codecool.queststore.DAO.MentorDAO;
 import com.codecool.queststore.DAO.UserDAO;
 import com.codecool.queststore.model.server.session.SessionPool;
@@ -19,7 +20,7 @@ public class MentorsService {
     }
 
         String generateResponseBody(boolean isCreated) throws SQLException {
-            User currentUser = new UserDAO().getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
+            User currentUser = new UserDAO(ConnectionPool.getConnection()).getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
 
             return new TemplateRender().RenderMentorListPage(currentUser, new MentorDAO().getMentors(), isCreated);
         }
