@@ -15,7 +15,7 @@ public class ConnectionPool {
 
 //    private static GenericObjectPool gPool = null;
     private static ConnectionPool pool = null;
-    private DataSource db;
+    private static DataSource db;
     private  static  GenericObjectPool gPool = null;
 
     private ConnectionPool() {
@@ -48,7 +48,7 @@ public class ConnectionPool {
     }
 
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return db.getConnection();
     }
     // This Method Is Used To Print The Connection Pool Status

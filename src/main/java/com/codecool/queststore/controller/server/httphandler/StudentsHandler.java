@@ -27,7 +27,7 @@ public class StudentsHandler extends AbstractHttphandler implements HttpHandler{
             }
         }
 
-        private void handleSession(HttpExchange httpExchange) throws IOException, SQLException {
+        void handleSession(HttpExchange httpExchange) throws IOException, SQLException {
             String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
             HttpCookie cookie = new HttpCookie("Session-id", cookieStr);
 
@@ -43,7 +43,7 @@ public class StudentsHandler extends AbstractHttphandler implements HttpHandler{
             }
         }
 
-        private void handlePost(HttpExchange httpExchange) throws IOException, SQLException {
+        void handlePost(HttpExchange httpExchange) throws IOException, SQLException {
             String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
             HttpCookie cookie = new HttpCookie("Session-id", cookieStr);
             StudentsService studentsService = new StudentsService(cookie);

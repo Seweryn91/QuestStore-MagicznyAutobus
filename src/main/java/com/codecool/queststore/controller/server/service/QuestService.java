@@ -1,5 +1,6 @@
 package com.codecool.queststore.controller.server.service;
 
+import com.codecool.queststore.DAO.ConnectionPool;
 import com.codecool.queststore.DAO.QuestDAO;
 import com.codecool.queststore.controller.server.httphandler.AbstractHttphandler;
 import com.codecool.queststore.dao.interfaces.QuestDAOInterface;
@@ -32,7 +33,7 @@ public class QuestService extends AbstractHttphandler {
     public void handleSession(HttpExchange httpExchange) throws IOException, SQLException {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         HttpCookie cookie = new HttpCookie("Session-id", cookieStr);
-        User user = new com.codecool.queststore.DAO.UserDAO().getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
+        User user = new com.codecool.queststore.DAO.UserDAO(ConnectionPool.getConnection()).getUser(SessionPool.getSessionByUUID(UUID.fromString(cookie.getValue())).getUSER_ID());
         String viewStudentQuestPath = "/quests/view";
         String markQuestPath = "/quests/mark";
         String requestURIString = httpExchange.getRequestURI().toString();

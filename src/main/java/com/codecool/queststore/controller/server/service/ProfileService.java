@@ -1,9 +1,6 @@
 package com.codecool.queststore.controller.server.service;
 
-import com.codecool.queststore.DAO.ArtifactDAO;
-import com.codecool.queststore.DAO.ClassDAO;
-import com.codecool.queststore.DAO.TitleDAO;
-import com.codecool.queststore.DAO.UserDAO;
+import com.codecool.queststore.DAO.*;
 import com.codecool.queststore.model.Title;
 import com.codecool.queststore.model.classes.CodecoolClass;
 import com.codecool.queststore.model.server.session.SessionPool;
@@ -41,12 +38,18 @@ public class ProfileService {
     }
 
     public boolean updateEmail(int id, String email) {
-        return new UserDAO().updateEmail(id, email);
+        try {
+            new UserDAO(ConnectionPool.getConnection()).updateEmail(id, email);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void updateAddress(int id, String address) {
         try {
-            new UserDAO().updateAddress(id, address);
+            new UserDAO(ConnectionPool.getConnection()).updateAddress(id, address);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -69,7 +72,7 @@ public class ProfileService {
 
 
     public String generateResponseBody() throws SQLException {
-        User currentUser = new UserDAO()
+        User currentUser = new UserDAO(ConnectionPool.getConnection())
                 .getUser(SessionPool
                         .getSessionByUUID(UUID
                                 .fromString(cookie.getValue()))
@@ -109,7 +112,7 @@ public class ProfileService {
         User target = null;
 
         if (userID != null)
-            target = new UserDAO().getUser(userID);
+            target = new UserDAO(ConnectionPool.getConnection()).getUser(userID);
 
         if (target != null) {
             return target;

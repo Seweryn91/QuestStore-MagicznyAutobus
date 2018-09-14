@@ -12,9 +12,15 @@ import java.util.List;
 
 public class UserDAO implements Connectable, UserDAOInterface {
 
+    private Connection conn;
+
+    public UserDAO(Connection conn) {
+        this.conn = conn;
+    }
+
     @Override
-    public void deleteUser(int userId) throws SQLException {
-        Connection conn = cp.getConnection();
+    // ??? executeQuery() or executeUptate() call function and what return? how to know result
+    public void deleteUser(int userId ) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("SELECT deleteUser(?)");
         stmt.setInt(1, userId);
         stmt.executeQuery();
@@ -29,7 +35,6 @@ public class UserDAO implements Connectable, UserDAOInterface {
         String email = null;
         String address = null;
         Role role = null;
-        Connection conn = cp.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM getUser(?)");
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
@@ -58,7 +63,6 @@ public class UserDAO implements Connectable, UserDAOInterface {
         String email = null;
         String address = null;
         Role role = null;
-        Connection conn = cp.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM getusers()");
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
@@ -95,7 +99,6 @@ public class UserDAO implements Connectable, UserDAOInterface {
             String email = null;
             String address = null;
 
-            Connection conn = cp.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM getusers(?)");
             stmt.setString(1, roleStr);
             ResultSet rs = stmt.executeQuery();
@@ -120,7 +123,6 @@ public class UserDAO implements Connectable, UserDAOInterface {
 
     public boolean updateEmail(int id, String email) {
         try {
-            Connection conn = cp.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT updateEmail(?, ?)");
             stmt.setInt(1, id);
             stmt.setString(2, email);
@@ -137,7 +139,6 @@ public class UserDAO implements Connectable, UserDAOInterface {
         }
 
         public void updateAddress(int id, String address) throws SQLException {
-        Connection conn = cp.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT updateAddress(?, ?)");
         stmt.setInt(1, id);
         stmt.setString(2, address);

@@ -1,5 +1,6 @@
 package com.codecool.queststore.model;
 
+import com.codecool.queststore.DAO.ConnectionPool;
 import com.codecool.queststore.DAO.LoginDAO;
 import com.codecool.queststore.DAO.UserDAO;
 import com.codecool.queststore.model.user.User;
@@ -21,7 +22,7 @@ public class Login {
             int userID = new LoginDAO().validation(this);
 
             if (userID > 0) {
-                return new UserDAO().getUser(userID);
+                return new UserDAO(ConnectionPool.getConnection()).getUser(userID);
             }
         } catch (SQLException e) {
             e.printStackTrace();
