@@ -14,7 +14,7 @@ public class Server {
     private HttpServer server;
 
     public void run() throws IOException {
-        server = HttpServer.create(new InetSocketAddress(8000), 0);
+        server = HttpServer.create(new InetSocketAddress(5432), 0);
         setContext(server);
         server.setExecutor(null);
         new SessionPool();

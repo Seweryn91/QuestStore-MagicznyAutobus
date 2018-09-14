@@ -12,6 +12,7 @@ import com.codecool.queststore.model.user.User;
 import com.codecool.queststore.view.RenderInteface;
 import com.codecool.queststore.view.TemplateRender;
 
+import java.lang.reflect.Field;
 import java.net.HttpCookie;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -27,6 +28,18 @@ public class ClassService {
     public ClassService(HttpCookie cookie, String path) {
         this.cookie = cookie;
         this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public HttpCookie getCookie() {
+        return cookie;
+    }
+
+    public void setClassDAOInterface(ClassDAOInterface classDAOInterface) {
+        this.classDAOInterface = classDAOInterface;
     }
 
     public String generateResponseBody() throws SQLException {
@@ -56,7 +69,7 @@ public class ClassService {
         }
     }
 
-    private boolean isAction(String[] splitedPath) {
+    protected boolean isAction(String[] splitedPath) {
         final int ACTION_PLACE = 2;
         if (ACTION_PLACE < splitedPath.length) {
             return splitedPath[ACTION_PLACE].split(":")[0].equals("assign");
@@ -94,7 +107,7 @@ public class ClassService {
         }
     }
 
-    private CodecoolClass defineTarget(List<CodecoolClass> classes, String[] array) {
+    protected CodecoolClass defineTarget(List<CodecoolClass> classes, String[] array) {
         Integer classID = getTargetClassID(array);
         Iterator<CodecoolClass> classIterator = classes.iterator();
 
@@ -124,7 +137,7 @@ public class ClassService {
         }
     }
 
-    private String[] splitURL(String path) {
+    protected String[] splitURL(String path) {
         return path.split("/");
     }
 
@@ -139,7 +152,7 @@ public class ClassService {
         return null;
     }
 
-    private boolean isStringCastableToInt(String string) {
+    protected boolean isStringCastableToInt(String string) {
         try{
             Integer.parseInt(string);
             return true;
