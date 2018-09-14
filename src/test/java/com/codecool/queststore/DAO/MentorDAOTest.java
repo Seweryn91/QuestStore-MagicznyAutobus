@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -18,14 +20,12 @@ class MentorDAOTest {
 
 
     @Test
-    void testAddingExistingMentor(){
+    void testAddingExistingMentor() throws SQLException {
         boolean created = false;
+        mentorDAO.createMentor(user,login);
 
-        try{
-            created = mentorDAO.createMentor(user,login);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        created = mentorDAO.createMentor(user,login);
+
 
         assertFalse(created);
     }
